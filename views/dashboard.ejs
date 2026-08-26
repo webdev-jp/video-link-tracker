@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video Link Tracker</title>
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      margin: 0;
+      background: #0b0b0c;
+      color: #eee;
+      font-family: -apple-system, Segoe UI, Roboto, sans-serif;
+      padding: 24px;
+    }
+    h1 { font-size: 1.4rem; margin-bottom: 4px; }
+    .subtitle { color: #999; margin-bottom: 24px; font-size: 0.9rem; }
+    form {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      max-width: 640px;
+    }
+    input[type="text"] {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 6px;
+      border: 1px solid #333;
+      background: #1a1a1c;
+      color: #eee;
+      font-size: 0.95rem;
+    }
+    button {
+      padding: 10px 18px;
+      border-radius: 6px;
+      border: none;
+      background: #4f8cff;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover { background: #3d76e0; }
+    #result { margin-bottom: 24px; font-size: 0.9rem; }
+    #result a { color: #4f8cff; }
+    table { border-collapse: collapse; width: 100%; max-width: 900px; }
+    th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #222; font-size: 0.9rem; }
+    th { color: #999; font-weight: 500; }
+    .referrers { color: #999; font-size: 0.8rem; }
+    .slug-link { font-family: monospace; }
+  </style>
+</head>
+<body>
+  <h1>Video Link Tracker</h1>
+  <div class="subtitle">Paste a YouTube URL to generate a tracked link.</div>
+
+  <form id="add-form">
+    <input type="text" id="youtube-url" placeholder="https://www.youtube.com/watch?v=..." required />
+    <button type="submit">Create link</button>
+  </form>
+  <div id="result"></div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Tracked link</th>
+        <th>Views</th>
+        <th>Plays</th>
+        <th>Completes</th>
+        <th>Top referrers</th>
+        <th>Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% videos.forEach(function(video) { %>
+        <tr>
+          <td><%= video.title || '(untitled)' %></td>
+          <td class="slug-link"><a href="/v/<%= video.id %>" target="_blank">/v/<%= video.id %></a></td>
+          <td><%= video.views || 0 %></td>
+          <td><%= video.plays || 0 %></td>
+          <td><%= video.completes || 0 %></td>
+          <td class="referrers">
+            <% (referrersByVideo[video.id] || []).forEach(function(r) { %>
+              <%= r.referrer %> (<%= r.count %>)<br/>
+            <% }) %>
+          </td>
+          <td><%= video.created_at %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <script src="/public/dashboard.js"></script>
+</body>
+</html>

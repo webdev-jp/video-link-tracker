@@ -1,0 +1,19 @@
+{
+  "name": "video-link-tracker",
+  "version": "1.0.0",
+  "description": "Embed YouTube videos on pages you control and track views/plays.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.0",
+    "nanoid": "^3.3.7"
+  }
+}
