@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: video-link-tracker
+    runtime: node
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: DASHBOARD_USER
+        value: admin
+      - key: DASHBOARD_PASSWORD
+        sync: false
+      - key: DB_PATH
+        value: /data/tracker.db
+    disk:
+      name: data
+      mountPath: /data
+      sizeGB: 1
